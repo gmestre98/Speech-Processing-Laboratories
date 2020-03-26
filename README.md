@@ -11,8 +11,17 @@ The Laboratories of our speech processing course on Instituto Superior Técnico
   #### Group part
   
    There can be found the broad phonetic transcription of a sentence from a Portuguese newspaper and also the identification of the 10        digits from their waveform and spectrogram.
+
 ## Laboratory 2
-    
+  #### Part 1 - Fundamental frequency estimation
+  
+  #### Part 2 - Linear prediction
+
+  #### Part 3 - Vocoder simulation
+
+  #### Part 4 - Formant synthesizer
+
+
 ## Laboratory 3
   
 ## Laboratory 4
