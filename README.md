@@ -2,11 +2,15 @@
 The Laboratories of our speech processing course on Instituto Superior Técnico
 
 ## Laboratory 1
-  #### Recordings
-    Here there were made recordings of the 9 (oral) vowels of European Portuguese with silences between them, and recordings of our     birthdates
-    
-  ###### Vowel Triangle
-    Here it is drawn the vowel triangle
+  #### Two individual folders
+  
+   In each folder it is possible to find for each of us, the respective
+   9 oral vowels of European Portuguese recorded and a recording of the respective birthdate.
+   There can also be found the vowel triangle for the vowels and the ortographic annotation and narrow phonetic annotation for the birthdate recording
+   
+  #### Group part
+  
+   There can be found the broad phonetic transcription of a sentence from a Portuguese newspaper and also the identification of the 10        digits from their waveform and spectrogram.
 ## Laboratory 2
     
 ## Laboratory 3
