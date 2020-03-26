@@ -1,0 +1,133 @@
+
+<!-- saved from url=(0062)https://www.hlt.inesc-id.pt/~imt/priv/pf/pf1920/lab2/lab2.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Speech Processing</title>
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#004C7D" vlink="#551A8B" alink="#FF0000">
+
+<font face="Verdana" color="#B9BAD8" size="+1"><b><i>
+Lab 2
+</i></b></font>
+
+<p>Deadline: TBA.</p>
+
+<p><b> Part 1 - Fundamental frequency estimation</b>
+
+</p><ol type="1">
+
+<li>Using the Octave/Matlab tools, compute the fundamental
+  frequency of one vowel segment of one of the speech files <i>vowels_nnnnn.wav</i>, by
+  detecting the local maximum of the autocorrelation function.
+</li><li>After developing the code to analyse a single window, generalize
+  to analyse a whole speech file. Use one of the two
+  <i>birthdate_nnnnn.wav</i>  files (no need to test on both).  Write
+  the computed F0 values (one frame per line, values in Hz) to a file named
+  <i>birthdate_nnnnn.myf0</i>. Unvoiced frames should correspond to
+  zero values. Compute
+  the average F0 for that file (excluding the zero values).
+</li><li>Compare these results with the ones obtained by the Praat
+  or Wavesurfer tools
+  (<i>birthdate_nnnnn.f0</i>), with similar parametrization. The
+  results should be written in a text file <i>f0_results.txt</i>, with the
+  following contents:
+<ul>
+  <li>Average F0 (tool): --- Hz
+  </li><li>Average F0 (autocorr.):  --- Hz
+</li></ul>
+</li></ol>
+
+<p><b> Part 2 - Linear prediction</b>
+
+</p><ol type="1">
+
+<li>Write a function that computes the residual of linear prediction. The function
+should be flexible enough to allow different choices of 
+analysis window length and interval, and prediction order.
+Suggestions: Use the function <i>lpcauto</i> of the 
+<i>voicebox</i> toolbox publicly available for Matlab to compute the
+  linear prediction coefficients for a whole speech file, and then use
+  the function <i>filter</i> to compute the corresponding residual. 
+  
+</li><li>Test the function on one of the files <i>birthdate_nnnnn.wav</i> from the group,
+producing the file <i>birthdate_nnnnn_res.wav</i>, using the
+autocorrelation method, windows of 20 ms, overlapping by 50%, and
+ prediction order 16.
+
+</li><li>Using for instance <i>wavesurfer</i>, plot the magnitude of the
+  short-time
+  spectra of the original and residual signals (superimposed) for a
+  vowel segment.
+
+</li><li>Compare the results of the function for the following conditions:
+<ul>
+<li>analysis window length - 20 ms and 10 ms
+</li><li>analysis window interval - 10 ms and 5 ms
+</li><li>prediction order - 16 and 10
+</li></ul>
+Write brief comments in file <i>lpc_results.txt</i>.
+
+
+</li><li>Implement the inverse function, that is, the function that receives as input
+  arguments the prediction coefficients and the residual signal, and computes
+  the resynthesized signal. Test it with the file produced in the previous
+  exercise, yielding <i>birthdate_nnnnn_syn.wav</i>
+
+</li></ol>
+
+
+<p><b> Part 3 - Vocoder simulation</b> 
+
+</p><ol type="1">
+
+  <li>
+  Simulate an unquantized LPC vocoder model and test it with file <i>birthdate_nnnnn.wav</i>. The original residual signal, which is the ideal excitation, should be replaced by an artificial excitation which is a pulse train in voiced frames, and white noise in unvoiced frames. The reconstructed signal should be stored in file <i>birthdate_nnnnn_voc.wav</i>.
+
+<br>Suggestion: start by simulating the vocoder scheme with a
+  simpler excitation signal in which each frame is either unvoiced or
+  voiced with a constant pitch (as computed in Part 1).
+</li></ol>
+
+<p><b> Part 4 - Formant synthesizer</b>
+
+</p><ol type="1">
+
+<li>Implement a function that simulates a rudimentary formant vowel
+  synthesizer. The function receives as input the vowel (eventually coded as an
+  integer value), the fundamental frequency (in Hz), the respective duration
+  (in seconds), and intensity. The synthesizer should have 4 formants,
+  whose locations
+  have been previously stored in a table. In order to build this table, use the 
+Wavesurfer tool, and save the data of the formant plot panel. Use a fixed bandwidth for each formant, equivalent to
+having a pole magnitude of 0.95, in order to have poles near the unit
+circumference, thus creating distinct resonances. Keep the intensity fixed, for
+the whole duration. Store the results in file
+  <i>formant_synthesis_fixed.wav</i>. Check the formants in this file
+  with formant plot in Wavesurfer.
+
+</li><li>Modify the previous function in order to synthesize a vowel whose
+  fundamental frequency and intensity may vary between pairs of values given as
+  input. Store the results in file <i>formant_synthesis_var.wav</i>.
+
+</li><li>Optional: Modify the previous functions in order to synthesize a sequence of
+  two vowels.
+
+</li><li>Optional: Introduce modifications in the location, and bandwidth of the
+  first 3
+  formants and observe the respective JND.
+</li></ol>
+
+<p>Note: Please submit your work in a zip file including all the above
+mentioned files (in italic) and the implemented code. The file should
+contain 4 different folders, one for each of the parts of this lab
+assignment. Although the
+students are advised to used the <i>vowels_nnnnn.wav</i> for
+debugging their code, the zip file should only include the
+corresponding files for <i>birthdate_nnnnn.wav</i>, for <b>one</b> of the
+students of the group (i.e. just choose one of the two
+<i>birthdate_nnnnn.wav</i> files of the group for inclusion).  
+
+
+
+
+</p></body></html>

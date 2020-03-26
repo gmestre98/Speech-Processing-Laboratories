@@ -1,0 +1,36 @@
+g7a.png
+
+zero 
+nove
+quatro
+seis
+dois
+
+g7b.png
+
+
+sete
+oito
+três
+cinco
+um
+
+zero: Começa numa fricativa e seguido de uma vogal, depois um vibrante seguido de uma últitam vogal cuja a energia está concentrada nas baixas frequências.
+
+um: Energia baixa concentrada nas baixas frequências, enfase no som devido a ser o último digíto da lista.
+
+dois: Começa com uma plosiva, ditongo onde a energia passa de estar concentrada nas baixas frequências para as altas frequências ("oi") e acaba numa fricativa.
+
+três: Começa com uma plosiva seguida por uma vibrante, depois a energia passa a estar concentrada em baixas frequências devido ao som "e" e acaba numa fricativa.
+
+quatro: Começa com uma plosiva seguida do ditongo "ua" com energia concentrada nas baixas frequências, seguido de outra plosiva mais vibrante.
+
+cinco: Começa com uma fricativa seguido por um som nasal acabado em uma plosiva mais a vogal "u".
+
+seis: Começa e acaba numa fricativa, entre as duas temos o ditongo "ei" onde a energia passa de estar concentrada nas baixas frequências para as altas frequências.
+
+sete: Começa numa fricativa e após uma vogal ocorre uma plosiva.
+
+oito: Começa com o ditongo idêntico ao visto "dois" seguido de uma plosiva acabada com uma vogal.
+
+nove: Começa com um som nasal e após uma vogal acaba numa fricativa.
