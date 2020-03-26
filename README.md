@@ -2,7 +2,7 @@
 The Laboratories of our speech processing course on Instituto Superior Técnico
 
 ## Laboratory 1
-  ###### Recordings
+  #### Recordings
     Here there were made recordings of the 9 (oral) vowels of European Portuguese with silences between them, and recordings of our     birthdates
     
   ###### Vowel Triangle
