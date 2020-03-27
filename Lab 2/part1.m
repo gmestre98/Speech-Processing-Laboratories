@@ -15,48 +15,44 @@ f0max= 400;
 s = x(i:i+n-1);
 figure
 plot(s);
-hamm = hamming(n);
 
-y =  x(i:i+n-1).*hamm;
+y =  x(i:i+n-1);
 
-[r,lags] = xcorr(y);
-figure
-plot(lags, r);
-
-% [peaks,locs,w,p ] =  findpeaks(r);
-% m = max(r);
-
-[amp,loc] = max(r((n+(Fs/f0max)):end));
-
-samples =loc + Fs/f0max;
-
-f0 = Fs/samples;
+f0 =  calcf0(y,n,Fs,f0max);
 
 %% Generalized
 
-[x, Fs] = audioread('birthdate_87005');
+[x, Fs] = audioread('birthdate_87005.wav');
 
-total_time = lenght(x);
+total_time = length(x);
 
-space = 10*0.001/16000;
-i = 1;
-
-l = n-1 + space;
-
-interval = n-1+space;
-while i < length(x)
+intervalo = 0.01*Fs;
+f0max=400;
+nwindows = total_time/intervalo;
+F0 = [];
+yn=[];
+F0avg = [];
+i=1;
+for i=1:(nwindows)
     
-    y = x(i,i+n-1);
+    init =(i-1)*intervalo + 1;
+    final=i*intervalo;
+    y = x(init:final);
 
-    % xcorr(y)
-    % calcular pico
-    % pico em F0;
+    f0 =  calcf0(y,intervalo,Fs,f0max);
+
+    yn=vertcat(yn,y);
+   
     
-    i=i+interval;
+    F0 = vertcat(F0,f0);
+    
+    if f0~=0
+    F0avg = vertcat(F0avg,f0);
+    end
+    
 end
 
-% media 
-%
+f0res = mean(F0avg);
 
     
     

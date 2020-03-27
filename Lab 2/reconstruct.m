@@ -14,6 +14,8 @@ function [e,xr] = reconstruct(x,intervalo,ak, n_windows)
 %
 
 e = [];
+Zi=[];
+xr = [];
     for j=1:(n_windows)
 
         init = (j*intervalo-intervalo/2)+1;
@@ -29,9 +31,34 @@ e = [];
         [y,Zi] = filter(ak(j,:),1,segment,Zi);
 
         % 2 options
-        e(init:final) = y;
+        %e(init:final) = y;
         
         e = vertcat(e,y);
+        
+      
+
+    end
+%% Reconstruct x based on e and ak
+ Zi=[];
+ 
+      for j=1:(n_windows)
+
+        init = (j*intervalo-intervalo/2)+1;
+        if j==1 % if it's the first window
+            init=1;
+        end
+        final = j*intervalo+intervalo/2;
+        if j==n_windows % if it's the last window
+            final=length(x);
+        end
+        
+        segment = e(init:final);
+        [y,Zi] = filter(1,ak(j,:),segment,Zi);
+
+        % 2 options
+        %e(init:final) = y;
+        
+        xr = vertcat(xr,y);
         
         % use filter to calculate e[n]
         % [y,Zi]=filter(B,A,X,Zi)
@@ -39,7 +66,7 @@ e = [];
         % A is 1
         % X is signal
 
-    end
+     end
 
 
 end
