@@ -13,17 +13,9 @@ ak = lpcauto(x,p,[intervalo, duracao, 0]);
 n_windows = length(ak);
 
 % 2 loops
-for j=1:n_windows
-init = (j-1)*intervalo+1;
-final = j*intervalo;
-x((j))
-% use filter to calculate e[n] 
-% filter(B,A,X)
-% b is aks
-% A is 1
-% X is signal
-    
-end
+reconstruct (x,intervalo,ak, n_windows)
+
 
 
 % audiowrite
+
