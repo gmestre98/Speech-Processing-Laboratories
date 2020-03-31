@@ -1,0 +1,7 @@
+To compare the tests we looked at the energy of the residual in a voiced segment of the original signal. We also analyzed the short time magnitude spectrum of the same segments.
+
+Window duration (10 or 20 ms): Fixing overlap at 50% and prediction order at 16 the residual energy with window duration of 10ms is bigger than 20 ms . Meaning there's a bigger error with a smaller window duration.
+
+Window Overlap (0% , 50%m or 75%): Fixing window duration at 20ms and prediction order at 16 we varied the interval between 5,10 and 20ms getting a corresponding overlap of 75%,50% and 0%. with overlap of 50% we get the least energy from the residual while with 75% overlap we get the most energy from the residual. therefore an overlap of 50% is prefered so that the coefficients calculated with each window are used to describe parts of the signal where the window possesses high values.
+
+Prediction order (10 or 16): We fixed window duration at 20ms and window overlap at 50%. With a higher prediction order there is less energy in the residual but the filter is starting to model individual harmonics.
