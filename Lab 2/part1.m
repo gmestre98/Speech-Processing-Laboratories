@@ -14,7 +14,7 @@ clc;
 % Adult male voice boundaries defined with some
 % error margin
 f0min = 60;
-f0max = 220;
+f0max = 200;
 
 % Defining the Sampling Period
 dt = 1/Fs1;
@@ -41,7 +41,7 @@ plot(s);
 % Finding F0% Signal correlation
 r = xcorr(s);
 
-f0vowl =  calcf0(r,n,Fs1,f0max,f0min);
+f0vowel =  calcf0(r,n,Fs1,f0max,f0min);
 
 %% Computing the average f0 for the birthdate speech signal
 [x, Fs] = audioread('birthdate_87005.wav');
@@ -79,14 +79,16 @@ for i=1:(nwindows-1)
     
     % Computing f0
     [f0, m2] =  calcf0(norm,tamanho,Fs,f0max, f0min);
-
+    
+    % Eliminating the frequency for sounds with really low energy
+    if (m <= 10^-2)
+        f0 = 0;
+    end
     % Making f0=0 where the max is an unvoiced sound
     if (m2 == 0)
         f0 = 0;
     end
     
-    
-    yn=vertcat(yn,y);
     F0 = vertcat(F0,f0);
     if (f0~=0)
         F0good = vertcat(F0good, f0);
@@ -96,5 +98,8 @@ end
 f0res = mean(F0);
 f0resgood = mean(F0good);
     
-    
+f = fopen('birthdate_87005.myf0', 'wt');
+fprintf(f, '%f\n', F0);
+fclose(f);
+
     

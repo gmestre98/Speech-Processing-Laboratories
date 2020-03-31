@@ -1,0 +1,10 @@
+The file we used to do this was the file 'birthdate_87005.wav', for this we obtained
+	- Average F0 (Wavesurfer): 145.13 Hz
+	- Average F0 (Autocorrelation using Matlab): 146.01 Hz
+
+At first we had a higher average F0 obtained with our code, getting something like 170 Hz.
+To improve this, we introduced a limit on how low the energy could be for us to read some frequency on a give window, therefore removing some values that could introduce an error.
+This helped to remove also a lit of noise.
+After this improvement we obtained a value of 159 Hz. But since in this audio file it is recorded the voice of a man, we thought it wouldn't make sense for us to search for periods
+corresponding to frequencies between 60 Hz and 400 Hz, because the voice of a man doesn't hit such high frequencies usually on normal pitch.
+So, to tackle this we changed that maximum frequency down to 220 Hz, which we thought would make more sense, even thought it is still a little high.
