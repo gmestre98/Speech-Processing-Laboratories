@@ -1,10 +1,6 @@
 %% Computing the average f0 for the birthdate speech signal
 [x, Fs] = audioread('birthdate_87005.wav');
 
-dummy=load('ideal_e.mat');
-
-ideal_e = dummy.e;
-
 % Defining lengths for the window and the loop
 total_time = length(x);
 intervalo = 0.01*Fs;
@@ -25,8 +21,6 @@ threshold = 0.3;
 for i=1:(nwindows-1)
     % Getting the signal and it's correlation
     y = x((i-1)*intervalo + 1 : (i+1)*intervalo);
-    h = ideal_e((i-1)*intervalo + 1 : (i+1)*intervalo); 
-    o = xcorr(h);
     r = xcorr(y);
 
     % Getting the energy of the signal and normalizing it
@@ -56,30 +50,19 @@ for i=1:(nwindows-1)
     if f0==0     
      % e((i-1)*intervalo + 1 : (i+1)*intervalo,1) = randn(1, length(y));
        e((i-1)*intervalo + 1 : (i+1)*intervalo,1) = randn(1, length(y))*0.01;
-       prev_zeros=0;
+      
     else
       z = zeros(size(y));
       
       imp_space = round(Fs/f0);
       
-      start=imp_space-prev_zeros;
-      
-      if start<1
-         z(1:imp_space:end) =  1;
-      else
-         z(start:imp_space:end) =  1;
-      end
-      f = xcorr(z);
-      base = max(f);
-      
-      gain=exc_energy/base;
-      
-      z = z.*(exc_energy);
+     
+      z(1:imp_space:end) =  0.1;
+    
       
       e((i-1)*intervalo + 1 : (i+1)*intervalo,1) = z;
       %Count zeros
-      k=find(z);
-      prev_zeros=length(z)-k(length(k));
+     
     end
     
    
@@ -115,4 +98,4 @@ xr=[];
 
   end
  
- audiowrite('birthdate_87005_voc.wav',xr,Fs);
+ audiowrite('birthdate_87005_voc_robo.wav',xr,Fs);
