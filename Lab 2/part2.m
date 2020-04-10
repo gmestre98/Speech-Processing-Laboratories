@@ -1,8 +1,8 @@
-%ak = lpcauto(som,p,[intervalo , duracao, skip]) 
-% p=16 good default value for Fs=16khz
-%intervalo spacing between windows starts from the middle of the window
-% skip of initial samples
-% use overlapping winsows
+%% Speech Processing Course - Laboratory 2
+% Authors:
+% Gonçalo Mestre: 87005
+% Ricardo Antão: 87107
+% Part 2
 
 %% Intervalo = 10ms / Duração = 20 ms / p= 16
 [x, Fs] = audioread('birthdate_87005.wav');% read sound file
@@ -22,6 +22,8 @@ n_windows = length(ak);
 str = '10_20_16';
 audiowrite([str,'birthdate_nnnnn_res.wav'],e,Fs);
 audiowrite([str,'birthdate_nnnnn_syn.wav'],xr,Fs);
+
+
 %% Intervalo = 10ms / Duração = 20 ms / p= 10
 clear all
 
@@ -61,6 +63,8 @@ n_windows = length(ak);
 str = '5_20_10';
 audiowrite([str,'birthdate_nnnnn_res.wav'],e,Fs);
 audiowrite([str,'birthdate_nnnnn_syn.wav'],xr,Fs);
+
+
 %% Intervalo = 5 ms / Duração = 20 ms / p = 16
 clear all
 [x, Fs] = audioread('birthdate_87005.wav');
@@ -143,6 +147,7 @@ n_windows = length(ak);
 str = '10_10_16';
 audiowrite([str,'birthdate_nnnnn_res.wav'],e,Fs);
 audiowrite([str,'birthdate_nnnnn_syn.wav'],xr,Fs);
+
 %% Intervalo = 10ms / Duração = 10 ms / p=10
 clear all
 
