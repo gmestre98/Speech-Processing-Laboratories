@@ -1,11 +1,19 @@
-%% Computing the average f0 for the birthdate speech signal
-[x, Fs] = audioread('birthdate_87005.wav');
-
+%% Speech Processing Course - Laboratory 2
+% Authors:
+% Gonçalo Mestre: 87005
+% Ricardo Antão: 87107
+% Part 3
+%% Load Files
+% load audiofile
+[x, Fs] = audioread('birthdate_87005.wav'); 
+% load ideal excitation from part 2
 dummy=load('ideal_e.mat');
-
 ideal_e = dummy.e;
 
-% Defining lengths for the window and the loop
+%% Generate Excitation e
+
+% Defining lengths for the window and the loop and other important
+% variables
 total_time = length(x);
 intervalo = 0.01*Fs;
 tamanho = 0.02*Fs;
@@ -24,15 +32,16 @@ threshold = 0.3;
 % Main loop
 for i=1:(nwindows-1)
     % Getting the signal and it's correlation
-    y = x((i-1)*intervalo + 1 : (i+1)*intervalo);
+    frame = x((i-1)*intervalo + 1 : (i+1)*intervalo);
+    autocorr = xcorr(frame);
+    % Doing the same for the ideal excitation and obtaining it's energy
     h = ideal_e((i-1)*intervalo + 1 : (i+1)*intervalo); 
     o = xcorr(h);
-    r = xcorr(y);
+    exc_energy = max(o);
 
     % Getting the energy of the signal and normalizing it
-    exc_energy = max(o);
-    m = max(r);
-    norm = r/m;
+    m = max(autocorr);
+    norm = autocorr/m;
     
     % Removing unvoiced sounds
     for j=1:length(norm)
@@ -53,39 +62,51 @@ for i=1:(nwindows-1)
         f0 = 0;
     end
     F0(i) = f0;
+    
+    % If it's unvoiced
     if f0==0     
-     % e((i-1)*intervalo + 1 : (i+1)*intervalo,1) = randn(1, length(y));
-       e((i-1)*intervalo + 1 : (i+1)*intervalo,1) = randn(1, length(y))*0.01;
+       e((i-1)*intervalo + 1 : (i+1)*intervalo,1) = randn(1, length(frame))*0.001;
        prev_zeros=0;
+    % If it's voiced
     else
-      z = zeros(size(y));
+      
+      frame_e = zeros(size(frame));
       
       imp_space = round(Fs/f0);
       
-      start=imp_space-prev_zeros;
+      start = imp_space-prev_zeros;
       
       if start<1
-         z(1:imp_space:end) =  1;
+         frame_e(1:imp_space:end) =  0.1;
       else
-         z(start:imp_space:end) =  1;
+         frame_e(start:imp_space:end) =  0.1;
       end
-      f = xcorr(z);
+      f = xcorr(frame_e);
       base = max(f);
       
       gain=exc_energy/base;
       
-      z = z.*(exc_energy);
+      frame_e = frame_e.*(exc_energy);
       
-      e((i-1)*intervalo + 1 : (i+1)*intervalo,1) = z;
-      %Count zeros
-      k=find(z);
-      prev_zeros=length(z)-k(length(k));
+      e((i-1)*intervalo + 1 : (i+1)*intervalo,1) = frame_e;
+      %Find impulse times
+      k=find(frame_e);
+      %Find the ones before half of the window
+      impulses = find(k<intervalo);
+      % If there's none
+      if isempty(impulses)
+          prev_zeros=0;
+      % If there's atleast one
+      else
+          % Calculate number of zeros already there before first impulse
+          prev_zeros=intervalo-k(impulses(length(impulses)));
+      end
     end
     
    
     
 end
-noise = randn(intervalo/2,1)*0.01;
+noise = randn(intervalo/2,1)*0.001;
 e = vertcat(noise,e);
 e = vertcat(e,noise);
 
@@ -108,10 +129,10 @@ xr=[];
     end
 
     segment = e(init:final);
-    [y,Zi] = filter(1,ak(j,:),segment,Zi);
+    [frame,Zi] = filter(1,ak(j,:),segment,Zi);
 
 
-    xr = vertcat(xr,y);
+    xr = vertcat(xr,frame);
 
   end
  
