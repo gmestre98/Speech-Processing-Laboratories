@@ -22,11 +22,11 @@ dt = 1/Fs1;
 % Defining the Time variable
 t = 0:dt:(length(x1)*dt)-dt;
 
-% Plotting the audio signal
-figure;
-plot(t,x1);
-xlabel('Time')
-ylabel('Signal')
+% % Plotting the audio signal
+% figure;
+% plot(t,x1);
+% xlabel('Time')
+% ylabel('Signal')
 
 % Selecting a small window of the signal
 % corresponding to the chosen oral vowel
@@ -34,9 +34,9 @@ i = Fs1*1.685;
 n = Fs1*1.380;
 s = x1(i:i+n-1);
 
-% Plotting the corresponding part
-figure
-plot(s);
+% % Plotting the corresponding part
+% figure
+% plot(s);
 
 % Finding F0% Signal correlation
 r = xcorr(s);

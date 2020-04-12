@@ -19,9 +19,9 @@ n_windows = length(ak);
 [e, xr] = reconstruct (x,intervalo,ak, n_windows);
 
 % audiowrite
-str = '10_20_16';
-audiowrite([str,'birthdate_nnnnn_res.wav'],e,Fs);
-audiowrite([str,'birthdate_nnnnn_syn.wav'],xr,Fs);
+%str = '10_20_16';
+audiowrite('birthdate_nnnnn_res.wav',e,Fs);
+audiowrite('birthdate_nnnnn_syn.wav',xr,Fs);
 
 
 %% Intervalo = 10ms / Duração = 20 ms / p= 10
@@ -41,9 +41,9 @@ n_windows = length(ak);
 [e, xr] = reconstruct (x,intervalo,ak, n_windows);
 
 % audiowrite
-str = '10_20_10';
-audiowrite([str,'birthdate_nnnnn_res.wav'],e,Fs);
-audiowrite([str,'birthdate_nnnnn_syn.wav'],xr,Fs);
+% str = '10_20_10';
+% audiowrite([str,'birthdate_nnnnn_res.wav'],e,Fs);
+% audiowrite([str,'birthdate_nnnnn_syn.wav'],xr,Fs);
 
 
 %% Intervalo = 5 ms / Duração = 20 ms / p = 10
@@ -60,9 +60,9 @@ n_windows = length(ak);
 [e, xr] = reconstruct (x,intervalo,ak, n_windows);
 
 % audiowrite
-str = '5_20_10';
-audiowrite([str,'birthdate_nnnnn_res.wav'],e,Fs);
-audiowrite([str,'birthdate_nnnnn_syn.wav'],xr,Fs);
+% str = '5_20_10';
+% audiowrite([str,'birthdate_nnnnn_res.wav'],e,Fs);
+% audiowrite([str,'birthdate_nnnnn_syn.wav'],xr,Fs);
 
 
 %% Intervalo = 5 ms / Duração = 20 ms / p = 16
@@ -79,9 +79,9 @@ n_windows = length(ak);
 [e, xr] = reconstruct (x,intervalo,ak, n_windows);
 
 % audiowrite
-str = '5_20_16';
-audiowrite([str,'birthdate_nnnnn_res.wav'],e,Fs);
-audiowrite([str,'birthdate_nnnnn_syn.wav'],xr,Fs);
+% str = '5_20_16';
+% audiowrite([str,'birthdate_nnnnn_res.wav'],e,Fs);
+% audiowrite([str,'birthdate_nnnnn_syn.wav'],xr,Fs);
 
 %% Intervalo = 5ms / Duração = 10 ms / p=10
 clear all
@@ -100,9 +100,9 @@ n_windows = length(ak);
 [e, xr] = reconstruct (x,intervalo,ak, n_windows);
 
 % audiowrite
-str = '5_10_10';
-audiowrite([str,'birthdate_nnnnn_res.wav'],e,Fs);
-audiowrite([str,'birthdate_nnnnn_syn.wav'],xr,Fs);
+% str = '5_10_10';
+% audiowrite([str,'birthdate_nnnnn_res.wav'],e,Fs);
+% audiowrite([str,'birthdate_nnnnn_syn.wav'],xr,Fs);
 
 %% Intervalo = 5ms / Duração = 10 ms / p=16
 clear all
@@ -122,9 +122,9 @@ n_windows = length(ak);
 [e, xr] = reconstruct (x,intervalo,ak, n_windows);
 
 % audiowrite
-str = '5_10_16';
-audiowrite([str,'birthdate_nnnnn_res.wav'],e,Fs);
-audiowrite([str,'birthdate_nnnnn_syn.wav'],xr,Fs);
+% str = '5_10_16';
+% audiowrite([str,'birthdate_nnnnn_res.wav'],e,Fs);
+% audiowrite([str,'birthdate_nnnnn_syn.wav'],xr,Fs);
 
 %% Intervalo = 10ms / Duração = 10 ms / p=16
 clear all
@@ -144,9 +144,9 @@ n_windows = length(ak);
 [e, xr] = reconstruct (x,intervalo,ak, n_windows);
 
 % audiowrite
-str = '10_10_16';
-audiowrite([str,'birthdate_nnnnn_res.wav'],e,Fs);
-audiowrite([str,'birthdate_nnnnn_syn.wav'],xr,Fs);
+% str = '10_10_16';
+% audiowrite([str,'birthdate_nnnnn_res.wav'],e,Fs);
+% audiowrite([str,'birthdate_nnnnn_syn.wav'],xr,Fs);
 
 %% Intervalo = 10ms / Duração = 10 ms / p=10
 clear all
@@ -166,6 +166,6 @@ n_windows = length(ak);
 [e, xr] = reconstruct (x,intervalo,ak, n_windows);
 
 % audiowrite
-str = '10_10_10';
-audiowrite([str,'birthdate_nnnnn_res.wav'],e,Fs);
-audiowrite([str,'birthdate_nnnnn_syn.wav'],xr,Fs);
+% str = '10_10_10';
+% audiowrite([str,'birthdate_nnnnn_res.wav'],e,Fs);
+% audiowrite([str,'birthdate_nnnnn_syn.wav'],xr,Fs);
