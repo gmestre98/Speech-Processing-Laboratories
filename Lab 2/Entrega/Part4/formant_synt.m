@@ -13,7 +13,8 @@ function y = formant_synt(vowel, F0, duration, intensity, mode)
     % mode=
     % 1 -> fixed period
     % 2 -> variable frequency
-    Fs= 16000;
+    %% Initializing values and coefficients
+    Fs= 8000;
 
     prev_zeros=0;
 
@@ -37,7 +38,7 @@ function y = formant_synt(vowel, F0, duration, intensity, mode)
     C = -bandwidth^2;
     B = 2*bandwidth*cos(2*pi*formants*Ts);
     A = ones(1,4)- B - C*ones(1,4);
-
+%% Creating impulse train
     if mode == 1
         % period between impulses in samples
         imp_space = round(Fs/F0);
@@ -46,34 +47,44 @@ function y = formant_synt(vowel, F0, duration, intensity, mode)
         e(1:imp_space:end) =  intensity;
         
     elseif mode == 2
+        % Initilization of needed parameters
         e=[];
-        range = abs(F0(2)-F0(1));
-        f0min = min(F0);
-        f0max = max(F0);
+        
         intervalo = Fs*0.1;
         nwindows = signal_duration/intervalo - 1;
-        
-        
+        % Pseudo interpolation
+        freq = linspace(F0(1), F0(2),nwindows-1);
+        amp = linspace(intensity(1), intensity(2),nwindows-1);
         for i= 1:nwindows-1
 
-                     
-            if rand<=0.5;
-            new_f = f0min;
-            else
-            new_f = f0max;
-            end
+            
+%             % choosing which frequency for the frame      
+%             if rand<=0.5;
+%             new_f = f0min;
+%             else
+%             new_f = f0max;
+%             end
+
+            new_f = freq(i);
+            % period in samples
             imp_space = round(Fs/new_f);
             frame = zeros(1,intervalo);
+            % Calculating first impulse instant
             start = imp_space - prev_zeros;
 
+           
             if start<1
-                frame(1:imp_space:end) =  0.1;
+                 % In case there were too many zeros before the start of
+                 % the new frame
+                frame(1:imp_space:end) = amp(i);
             else
-                frame(start:imp_space:end) =  0.1;
+                
+                frame(start:imp_space:end) =  amp(i);
             end
 
             e = horzcat(e,frame);
             
+            % Calculating number of zeros for transition between frames
             k=find(frame);
             
             if isempty(k)
@@ -85,8 +96,10 @@ function y = formant_synt(vowel, F0, duration, intensity, mode)
         end
         
     end
+%% Generate output vowel
 
 
+    % Concatenation of filters
     T1 = filter(A(1), [1 -B(1) -C], e);
     T2 = filter(A(2), [1 -B(2) -C], T1);
     T3 = filter(A(3), [1 -B(3) -C], T2);
@@ -99,9 +112,12 @@ function y = formant_synt(vowel, F0, duration, intensity, mode)
     % added normalization to avoid clipping
     y = y/max(abs(y));
 
-    str = num2str(vowel);
-    audiowrite('formant_synthesisvar.wav', y, Fs);
-
+%% Write audio file
+    if mode ==1
+    audiowrite('formant_synthesis_fixed.wav', y, Fs);  
+    elseif mode == 2
+    audiowrite('formant_synthesis_var.wav', y, Fs);
+    end
 
 
 
