@@ -10,8 +10,8 @@ def load_labels(files):
 	train_labels = files[0]
 	devel_labels = files[1]
 	
-	y_train = pd.read_csv(train_labels, sep=',')['label'].values
-	y_devel = pd.read_csv(devel_labels, sep=',')['label'].values
+	y_train = pd.read_csv(train_labels, sep=',')['Label'].values
+	y_devel = pd.read_csv(devel_labels, sep=',')['Label'].values
 	
 	return y_train, y_devel
 

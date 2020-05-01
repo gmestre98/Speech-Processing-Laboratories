@@ -6,6 +6,7 @@ from lib.tools import *
 from nn_torch_functions import *
 from svm_functions import *
 
+import sklearn
 import numpy as np
 import random as rn
 import torch
@@ -30,21 +31,13 @@ def run_svm(data_files, label_files):
 		  label. The file may contain other columns, but those will be ignored.
 	'''
 	# Load data and labels
-	X_train, X_devel, X_test = load_data(data_files)
+	X_t, X_d, X_te = load_data(data_files)
 	y_train, y_devel = load_labels(label_files)
 
-   	'''
-	Data Pre-processing:
-	 - This is an important step when preparing data for a classifier.
-	 - Normalizing or transforming data can greatly help the classifier achieve better results and train faster.
-	 - Sklearn has a several preprocessing functions that can be used to this end:
-	 - https://scikit-learn.org/stable/modules/preprocessing.html
-
-	 - If you have not done the feature processing at Part 1 - now it is a good time to do it.
-	'''
-	X_train = sklearn.preprocessing.scale(X_train)
-	X_dev = sklearn.preprocessing.scale(X_dev)
-	X_test = sklearn.preprocessing.scale(X_test)
+   	
+	X_train = sklearn.preprocessing.scale(X_t)
+	X_devel = sklearn.preprocessing.scale(X_d)
+	X_test = sklearn.preprocessing.scale(X_te)
 	# Define Model Parameters
 	parms = {'kernel': 'linear',
 			 'C'	 : 1,
@@ -74,7 +67,7 @@ def run_svm(data_files, label_files):
 	# Save Model - After we train a model we can save it for later use
 	pkl.dump(model, open('svm_model.pkl','wb'))
 
-def run_nn(data_files, label_files):
+""" def run_nn(data_files, label_files):
 	# define training parameters:
 	# epochs = 20
 	# learning_rate = 0.001
@@ -154,12 +147,12 @@ def run_nn(data_files, label_files):
 	plot_training_history(epochs, [train_mean_losses], ylabel='Loss', name='training-loss')
 	plot_training_history(epochs, [valid_accs, valid_uar], ylabel='Accuracy', name='validation-metrics')
 
-
+ """
 
 
 def main():
 
-	directory = "" # Full path to your current folder
+	directory = "C:\\Users\\ricas\\WorkspacePython\\PF" # Full path to your current folder
 	feature_set = "egemaps" # name of the folder with the feature set
 
 	# Label files
