@@ -1,7 +1,7 @@
 import os
 import pickle as pkl
 
-from lib.tools import *
+from tools import *
 
 from nn_torch_functions import *
 from svm_functions import *
@@ -39,11 +39,12 @@ def run_svm(data_files, label_files):
 	X_devel = sklearn.preprocessing.scale(X_d)
 	X_test = sklearn.preprocessing.scale(X_te)
 	# Define Model Parameters
-	parms = {'kernel': 'linear',
+	parms = {'kernel': 'rbf',
 			 'C'	 : 1,
-			 'g'	 : 10,
-			 'd'	 : 10}
+			 'g'	 : 1/X_train.shape[1],
+			 'd'	 : 3}
 
+	
 	# Train Model
 	# Inspect the function train_svm at svm_functions.py and change class_weight
 	print ('Train the model...')
@@ -67,7 +68,9 @@ def run_svm(data_files, label_files):
 	# Save Model - After we train a model we can save it for later use
 	pkl.dump(model, open('svm_model.pkl','wb'))
 
-""" def run_nn(data_files, label_files):
+
+
+def run_nn(data_files, label_files):
 	# define training parameters:
 	# epochs = 20
 	# learning_rate = 0.001
@@ -75,11 +78,11 @@ def run_svm(data_files, label_files):
 	# batch_size = 64
 	# dropout = 0.1
 
-	epochs 		  = '''TODO'''
-	learning_rate = '''TODO'''
-	l2_decay 	  = '''TODO'''
-	batch_size    = '''TODO'''
-	dropout 	  = '''TODO'''
+	epochs 		  = 20
+	learning_rate = 0.001
+	l2_decay 	  = 0
+	batch_size    = 64
+	dropout 	  = 0.1
 
 	# define loss function. The weights tensor corresponds to the weight we give
 	# to each class. It corresponds to the inverse of the frequency of that class
@@ -87,21 +90,21 @@ def run_svm(data_files, label_files):
 	criterion = nn.CrossEntropyLoss(weight=torch.tensor([1, 1], dtype=torch.float).to(device)) # TODO: change class weights
 
 	# initialize dataset with the data files and label files
-	# dataset = SleepinessDataset(data_files, label_files)
-	dataset = SleepinessDataset('''TODO''')
+	dataset = SleepinessDataset(data_files, label_files)
 
 	# Get number of classes and number of features from dataset
 	n_classes  = torch.unique(dataset.y).shape[0]
-	n_features = '''TODO'''
+	n_features = dataset.X.shape[1]
 
 	# initialize the model
-	model = FeedforwardNetwork('''TODO''')
+	model = FeedforwardNetwork(n_classes, n_features, dropout)
 	model = model.to(device)
 
 	# get an optimizer
 	# define the optimizer:
 	optimizer = 'sgd'
-	optims = optims = {"adam": torch.optim.Adam, "sgd": torch.optim.SGD} '''TODO - Try different optimizers: Adam, Adagrad, ... Full list can be found in pytorch's documentation'''
+	optims = optims = {"adam": torch.optim.Adam, "sgd": torch.optim.SGD} 
+	#Try different optimizers: Adam, Adagrad, ... Full list can be found in pytorch's documentation
 	optim_cls = optims[optimizer]
 	optimizer = optim_cls(
 		model.parameters(),
@@ -109,12 +112,12 @@ def run_svm(data_files, label_files):
 		weight_decay=l2_decay)
 
 	# train the model
-	model, train_mean_losses, valid_accs , valid_uar = '''TODO'''
+	model, train_mean_losses, valid_accs , valid_uar = train(dataset, model, optimizer, criterion, batch_size, epochs)
 
 
 	# evaluate on train set
 	train_X, train_y 	 = dataset.X, dataset.y
-	train_acc, train_prf = '''TODO'''
+	train_acc, train_prf = evaluate(model, train_X, train_y)
 
 	print('Final Train acc: %.4f' % (train_acc))
 	print('Final Train prf: ', train_prf)
@@ -122,7 +125,7 @@ def run_svm(data_files, label_files):
 
 	# evaluate on dev set
 	dev_X, dev_y 	 = dataset.dev_X, dataset.dev_y
-	dev_acc, dev_prf = '''TODO'''
+	dev_acc, dev_prf = evaluate(model, dev_X, dev_y)
 
 	print('Final dev acc: %.4f' % (dev_acc))
 	print('Final dev prf: ', dev_prf)
@@ -130,10 +133,10 @@ def run_svm(data_files, label_files):
 
 	# get predictions for test and dev set
 	test_X = dataset.test_X
-	predictions_dev = '''TODO'''
+	predictions_dev = predict(model, dev_X)
 	predictions_dev  = predictions_dev.detach().cpu().numpy()
 
-	predictions_test = ''' TODO '''
+	predictions_test = predict(model, test_X)
 	predictions_test = predictions_test.detach().cpu().numpy()
 
 	# Save test predictions
@@ -147,13 +150,12 @@ def run_svm(data_files, label_files):
 	plot_training_history(epochs, [train_mean_losses], ylabel='Loss', name='training-loss')
 	plot_training_history(epochs, [valid_accs, valid_uar], ylabel='Accuracy', name='validation-metrics')
 
- """
 
 
 def main():
 
-	directory = "C:\\Users\\ricas\\WorkspacePython\\PF" # Full path to your current folder
-	feature_set = "egemaps" # name of the folder with the feature set
+	directory = "/mnt/c/Users/Goncalo/Documents/Tecnico/MestreMEEC/Mestrado/2 semestre/Processamento da Fala/Speech-Processing-Laboratories/Lab 3/part_2" # Full path to your current folder
+	feature_set = "is11" # name of the folder with the feature set
 
 	# Label files
 	labels_train = 'train_labels.csv'
@@ -170,7 +172,7 @@ def main():
 	run_svm(data_files, label_files)
 
 	# Run NN - PART 3
-	# run_nn(data_files, label_files)
+	#run_nn(data_files, label_files)
 
 if __name__ == "__main__":
 	main()

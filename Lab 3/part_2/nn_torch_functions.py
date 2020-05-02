@@ -11,7 +11,7 @@ import torch.nn as nn
 from sklearn.metrics import precision_recall_fscore_support, accuracy_score
 from sklearn import preprocessing
 
-from lib.tools import *
+from tools import *
 
 # Fix random seeds for reproducibility
 torch.manual_seed(1234)
