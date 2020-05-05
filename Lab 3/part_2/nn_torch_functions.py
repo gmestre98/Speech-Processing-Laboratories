@@ -96,16 +96,26 @@ class FeedforwardNetwork(nn.Module):
 		torch.manual_seed(1234)
 		self.lin1 = nn.Sequential(
 			nn.Linear(n_features, 32), #You may change the output size (2.3)
-			# TODO: Introduce batch normalization (2.2)
-			nn.ReLU()
-			# TODO: Introduce dropout (2.2)
+			nn.BatchNorm1d(), #Devia estar o batch size
+			nn.ReLU(),
+			nn.Dropout(dropout)
 			)
 		
 		torch.manual_seed(1234)
-		# self.lin2 = # TODO add one extra sequential with linear layer and activation function (2.1)
+		self.lin2 = nn.Sequential(
+			nn.Linear(n_features, 32), #You may change the output size (2.3)
+			nn.BatchNorm1d(), #Devia estar o batch size
+			nn.ReLU(),
+			nn.Dropout(dropout)
+			)# TODO add one extra sequential with linear layer and activation function (2.1)
 
 		torch.manual_seed(1234)
-		# self.lin3 = # TODO add one extra sequential with linear layer and activation function (2.1)
+		self.lin3 = nn.Sequential(
+			nn.Linear(n_features, 32), #You may change the output size (2.3)
+			nn.BatchNorm1d(), #Devia estar o batch size
+			nn.ReLU(),
+			nn.Dropout(dropout)
+			)# TODO add one extra sequential with linear layer and activation function (2.1)
 
 		# for classification tasks you should use a softmax as final
 		# activation layer, but if you use the loss function
@@ -123,8 +133,8 @@ class FeedforwardNetwork(nn.Module):
 		"""
 
 		output = self.lin1(x)
-		# output = self.lin2(output)
-		# output = self.lin3(output)
+		output = self.lin2(output)
+		output = self.lin3(output)
 		output = self.lin_out(output)
 
 		return output
@@ -181,7 +191,7 @@ def evaluate(model, X, y):
 	model.eval()
 
 	# make the predictions
-	y_hat = ''' TODO '''
+	y_hat = model.predict(X)
 
 	# convert to cpu
 	y_hat = y_hat.detach().cpu()
