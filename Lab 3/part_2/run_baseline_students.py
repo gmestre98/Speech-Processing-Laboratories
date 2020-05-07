@@ -34,17 +34,17 @@ def run_svm(data_files, label_files):
 	X_t, X_d, X_te = load_data(data_files)
 	y_train, y_devel = load_labels(label_files)
 
-   	
+
 	X_train = sklearn.preprocessing.scale(X_t)
 	X_devel = sklearn.preprocessing.scale(X_d)
 	X_test = sklearn.preprocessing.scale(X_te)
 	# Define Model Parameters
 	parms = {'kernel': 'rbf',
 			 'C'	 : 1,
-			 'g'	 : 1/X_train.shape[1],
+			 'g'	 : 0.01/88,
 			 'd'	 : 3}
 
-	
+
 	# Train Model
 	# Inspect the function train_svm at svm_functions.py and change class_weight
 	print ('Train the model...')
@@ -103,7 +103,7 @@ def run_nn(data_files, label_files):
 	# get an optimizer
 	# define the optimizer:
 	optimizer = 'sgd'
-	optims = optims = {"adam": torch.optim.Adam, "sgd": torch.optim.SGD} 
+	optims = optims = {"adam": torch.optim.Adam, "sgd": torch.optim.SGD}
 	#Try different optimizers: Adam, Adagrad, ... Full list can be found in pytorch's documentation
 	optim_cls = optims[optimizer]
 	optimizer = optim_cls(
@@ -154,8 +154,8 @@ def run_nn(data_files, label_files):
 
 def main():
 
-	directory = "/mnt/c/Users/Goncalo/Documents/Tecnico/MestreMEEC/Mestrado/2 semestre/Processamento da Fala/Speech-Processing-Laboratories/Lab 3/part_2" # Full path to your current folder
-	feature_set = "is11" # name of the folder with the feature set
+	directory = "C:/Users/ricas/WorkspacePython/PF" # Full path to your current folder
+	feature_set = "egemaps" # name of the folder with the feature set
 
 	# Label files
 	labels_train = 'train_labels.csv'
@@ -169,10 +169,10 @@ def main():
 	data_test  = directory + '/features/' + feature_set + '_test.csv'
 	data_files = [data_train, data_devel, data_test]
 	# Run SVM - PART 2
-	run_svm(data_files, label_files)
+	#run_svm(data_files, label_files)
 
 	# Run NN - PART 3
-	#run_nn(data_files, label_files)
+	run_nn(data_files, label_files)
 
 if __name__ == "__main__":
 	main()
