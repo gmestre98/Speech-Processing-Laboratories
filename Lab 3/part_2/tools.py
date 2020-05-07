@@ -9,10 +9,10 @@ def load_labels(files):
 
 	train_labels = files[0]
 	devel_labels = files[1]
-	
+
 	y_train = pd.read_csv(train_labels, sep=',')['Label'].values
 	y_devel = pd.read_csv(devel_labels, sep=',')['Label'].values
-	
+
 	return y_train, y_devel
 
 
@@ -22,11 +22,11 @@ def load_data(files):
 	train_file = files[0]
 	devel_file = files[1]
 	test_file  = files[2]
-	
+
 	X_train = pd.read_csv(train_file, header=0, index_col=False, sep=';', usecols = lambda column : column not in ["name", "frameTime"]).values
 	X_devel = pd.read_csv(devel_file, header=0, index_col=False, sep=';', usecols = lambda column : column not in ["name", "frameTime"]).values
 	X_test  = pd.read_csv(test_file, header=0, index_col=False, sep=';', usecols = lambda column : column not in ["name", "frameTime"]).values
-	
+
 	return X_train, X_devel, X_test
 
 
@@ -34,6 +34,8 @@ def load_data(files):
 def save_predictions(file_list_path, predictions, output_path):
 	files = pd.read_csv(file_list_path)
 	file_ids = files.file_id.values
+	print(file_ids.shape)
+	print(predictions.shape)
 	pred_df = pd.DataFrame({'file_id': file_ids, 'predictions': predictions})
 	pred_df.to_csv(output_path, index=False)
 

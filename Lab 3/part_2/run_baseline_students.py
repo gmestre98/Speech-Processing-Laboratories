@@ -62,7 +62,13 @@ def run_svm(data_files, label_files):
 	predictions_test = model.predict(X_test)
 
 	# Save test predictions
-	#save_predictions('caminho ate file_txt',predictions_test,'caminho para output file')
+	dev_path = "C:\\Users\\ricas\\Documents\\IST\\4ºano\\2sem\\PF\\Lab\\Lab3\\Entrega\\corpus\\labels\\dev_labels.csv"
+	test_path = "C:\\Users\\ricas\\Documents\\IST\\4ºano\\2sem\\PF\\Lab\\Lab3\\Entrega\\corpus\\labels\\test_labels.csv"
+	output_dev_path ="C:\\Users\\ricas\\WorkspacePython\\PF\\preds\\egemaps_dev_svm_predictions.csv"
+	output_test_path ="C:\\Users\\ricas\\WorkspacePython\\PF\\preds\\egemaps_test_svm_predictions.csv"
+	# Save test predictions
+	save_predictions(dev_path, predictions_dev, output_dev_path)
+	save_predictions(test_path, predictions_test, output_test_path)
 	# you may use the function save_predictions in tools.py
 
 	# Save Model - After we train a model we can save it for later use
@@ -78,10 +84,10 @@ def run_nn(data_files, label_files):
 	# batch_size = 64
 	# dropout = 0.1
 
-	epochs 		  = 20
-	learning_rate = 0.001
+	epochs 		  = 40
+	learning_rate = 0.1
 	l2_decay 	  = 0
-	batch_size    = 64
+	batch_size    = 128
 	dropout 	  = 0.1
 
 	# define loss function. The weights tensor corresponds to the weight we give
@@ -102,8 +108,8 @@ def run_nn(data_files, label_files):
 
 	# get an optimizer
 	# define the optimizer:
-	optimizer = 'sgd'
-	optims = optims = {"adam": torch.optim.Adam, "sgd": torch.optim.SGD}
+	optimizer = 'adam'
+	optims = optims = {"adam": torch.optim.Adam, "sgd": torch.optim.SGD, "adagrad": torch.optim.Adagrad}
 	#Try different optimizers: Adam, Adagrad, ... Full list can be found in pytorch's documentation
 	optim_cls = optims[optimizer]
 	optimizer = optim_cls(
@@ -139,8 +145,13 @@ def run_nn(data_files, label_files):
 	predictions_test = predict(model, test_X)
 	predictions_test = predictions_test.detach().cpu().numpy()
 
+	dev_path = "C:\\Users\\ricas\\Documents\\IST\\4ºano\\2sem\\PF\\Lab\\Lab3\\Entrega\\corpus\\labels\\dev_labels.csv"
+	test_path = "C:\\Users\\ricas\\Documents\\IST\\4ºano\\2sem\\PF\\Lab\\Lab3\\Entrega\\corpus\\labels\\test_labels.csv"
+	output_dev_path ="C:\\Users\\ricas\\WorkspacePython\\PF\\preds\\egemaps_dev_nn_predictions.csv"
+	output_test_path ="C:\\Users\\ricas\\WorkspacePython\\PF\\preds\\egemaps_test_nn_predictions.csv"
 	# Save test predictions
-	# TODO
+	save_predictions(dev_path, predictions_dev, output_dev_path)
+	save_predictions(test_path, predictions_test, output_test_path)
 	# you may use the function save_predictions in tools.py
 
 	# save the model
@@ -169,10 +180,10 @@ def main():
 	data_test  = directory + '/features/' + feature_set + '_test.csv'
 	data_files = [data_train, data_devel, data_test]
 	# Run SVM - PART 2
-	#run_svm(data_files, label_files)
+	run_svm(data_files, label_files)
 
 	# Run NN - PART 3
-	run_nn(data_files, label_files)
+	#run_nn(data_files, label_files)
 
 if __name__ == "__main__":
 	main()

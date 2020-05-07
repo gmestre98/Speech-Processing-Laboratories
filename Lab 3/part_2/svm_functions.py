@@ -49,21 +49,21 @@ def train_svm(X, y, parms):
 		                0: 1, 1: 1}, max_iter=1000, verbose=0, random_state=12345)
 
 	clf.fit(X, y)
-    
+
 	return clf
 
 # Compute Predictions and Metrics
 def test_svm(X, y, clf):
-	
+
 	# After we have trained the model we can compute predictions on unseen data and use them to evaluate other metrics
-	
+
 	preds= clf.predict(X)
-	
+
 	# In this case we are using as metrics the average F1 Score, Precision and Recall.
 	# If we want to learn better how the model is behaving for each class we can remove the "average" from the function's inputs
-	
+
 	prf = precision_recall_fscore_support(y, preds, labels=[0,1], average='macro')
- 
+
 	accuracy = accuracy_score(y, preds)
 
 	return prf, accuracy

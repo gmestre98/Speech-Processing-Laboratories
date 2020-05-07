@@ -89,34 +89,34 @@ class FeedforwardNetwork(nn.Module):
 		nn.ReLU(), nn.Tanh(), nn.Softmax().
 
 		Between the nn.Linear() and the activation function, it is usual to include
-		nn.BatchNorm1d(hidden_size), and after the adctivation function, it is usual to
+		nn.BatchNorm1d(hidden_size), and after the activation function, it is usual to
 		include nn.Dropout(p) to regularize the network.
 		'''
 
 		torch.manual_seed(1234)
 		self.lin1 = nn.Sequential(
-			nn.Linear(n_features, 32), #You may change the output size (2.3)
-			#nn.BatchNorm1d(n_features), #Devia estar o batch size
+			nn.Linear(n_features, 128), #You may change the output size (2.3)
+			nn.BatchNorm1d(128),
 			nn.ReLU(),
-			#nn.Dropout(dropout)
+			nn.Dropout(dropout)
 			)
 
 		torch.manual_seed(1234)
 		self.lin2 = nn.Sequential(
-			nn.Linear(n_features, 32), #You may change the output size (2.3)
-			#nn.BatchNorm1d(n_features), #Devia estar o batch size
-			nn.ReLU(),
-			#nn.Dropout(dropout)
-			)# TODO add one extra sequential with linear layer and activation function (2.1)
-
-		""" torch.manual_seed(1234)
-		self.lin3 = nn.Sequential(
-			nn.Linear(n_features, 32), #You may change the output size (2.3)
-			nn.BatchNorm1d(n_features), #Devia estar o batch size
+			nn.Linear(128, 64), #You may change the output size (2.3)
+			nn.BatchNorm1d(64),
 			nn.ReLU(),
 			nn.Dropout(dropout)
 			)# TODO add one extra sequential with linear layer and activation function (2.1)
- """
+
+		torch.manual_seed(1234)
+		self.lin3 = nn.Sequential(
+			nn.Linear(64, 32), #You may change the output size (2.3)
+			nn.BatchNorm1d(32),
+			nn.ReLU(),
+			nn.Dropout(dropout)
+			)# TODO add one extra sequential with linear layer and activation function (2.1)
+
 		# for classification tasks you should use a softmax as final
 		# activation layer, but if you use the loss function
 		# nn.CrossEntropyLoss() as we are using in this lab, you do
@@ -134,7 +134,7 @@ class FeedforwardNetwork(nn.Module):
 
 		output = self.lin1(x)
 		output = self.lin2(output)
-		#output = self.lin3(output)
+		output = self.lin3(output)
 		output = self.lin_out(output)
 
 		return output
