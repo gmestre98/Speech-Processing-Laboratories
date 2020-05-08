@@ -11,7 +11,7 @@ import torch.nn as nn
 from sklearn.metrics import precision_recall_fscore_support, accuracy_score
 from sklearn import preprocessing
 
-from lib.tools import *
+from tools import *
 
 # Fix random seeds for reproducibility
 torch.manual_seed(1234)
@@ -89,23 +89,33 @@ class FeedforwardNetwork(nn.Module):
 		nn.ReLU(), nn.Tanh(), nn.Softmax().
 
 		Between the nn.Linear() and the activation function, it is usual to include
-		nn.BatchNorm1d(hidden_size), and after the adctivation function, it is usual to
+		nn.BatchNorm1d(hidden_size), and after the activation function, it is usual to
 		include nn.Dropout(p) to regularize the network.
 		'''
 
 		torch.manual_seed(1234)
 		self.lin1 = nn.Sequential(
-			nn.Linear(n_features, 32), #You may change the output size (2.3)
-			# TODO: Introduce batch normalization (2.2)
-			nn.ReLU()
-			# TODO: Introduce dropout (2.2)
+			nn.Linear(n_features, 128), #You may change the output size (2.3)
+			nn.BatchNorm1d(128),
+			nn.ReLU(),
+			nn.Dropout(dropout)
 			)
-		
-		torch.manual_seed(1234)
-		# self.lin2 = # TODO add one extra sequential with linear layer and activation function (2.1)
 
 		torch.manual_seed(1234)
-		# self.lin3 = # TODO add one extra sequential with linear layer and activation function (2.1)
+		self.lin2 = nn.Sequential(
+			nn.Linear(128, 64), #You may change the output size (2.3)
+			nn.BatchNorm1d(64),
+			nn.ReLU(),
+			nn.Dropout(dropout)
+			)# TODO add one extra sequential with linear layer and activation function (2.1)
+
+		torch.manual_seed(1234)
+		self.lin3 = nn.Sequential(
+			nn.Linear(64, 32), #You may change the output size (2.3)
+			nn.BatchNorm1d(32),
+			nn.ReLU(),
+			nn.Dropout(dropout)
+			)# TODO add one extra sequential with linear layer and activation function (2.1)
 
 		# for classification tasks you should use a softmax as final
 		# activation layer, but if you use the loss function
@@ -123,8 +133,8 @@ class FeedforwardNetwork(nn.Module):
 		"""
 
 		output = self.lin1(x)
-		# output = self.lin2(output)
-		# output = self.lin3(output)
+		output = self.lin2(output)
+		output = self.lin3(output)
 		output = self.lin_out(output)
 
 		return output
@@ -146,7 +156,7 @@ def train_batch(X, y, model, optimizer, criterion, **kwargs):
 	optimizer.zero_grad()
 
 	# forward step
-	outputs = ''' TODO '''
+	outputs = model.forward(X)
 
 	loss = criterion(outputs, y)
 
@@ -163,7 +173,7 @@ def predict(model, X):
 	"""X (n_examples x n_features)"""
 	model.eval()
 	# make the predictions
-	scores = ''' TODO '''
+	scores = model.forward(X)
 
 	# scores contains, for each example, two scores that can be interpreted as the
 	# probability of each example belonging to each of the classes. To select the
@@ -181,7 +191,7 @@ def evaluate(model, X, y):
 	model.eval()
 
 	# make the predictions
-	y_hat = ''' TODO '''
+	y_hat = predict(model,X)
 
 	# convert to cpu
 	y_hat = y_hat.detach().cpu()
@@ -212,7 +222,7 @@ def train(dataset, model, optimizer, criterion, batch_size, epochs):
 		for X_batch, y_batch in train_dataloader:
 
 			# train each batch:
-			loss = '''TODO'''
+			loss = train_batch(X_batch,y_batch,model, optimizer, criterion)
 			train_losses.append(loss)
 
 		mean_loss = torch.tensor(train_losses).mean().item()
@@ -221,7 +231,7 @@ def train(dataset, model, optimizer, criterion, batch_size, epochs):
 		train_mean_losses.append(mean_loss)
 
 		# at the end of each epoch, evaluate with the dev set:
-		val_accuracy, val_prf = '''TODO'''
+		val_accuracy, val_prf = evaluate(model,dev_X,dev_y)
 
 		valid_accs.append(val_accuracy)
 		valid_uar.append(val_prf[1])
