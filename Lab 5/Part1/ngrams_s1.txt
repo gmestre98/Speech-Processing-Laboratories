@@ -1,0 +1,22 @@
+10 most common unigrams
+  24415 <s>
+  24415 </s>
+  16670 de
+  15121 a
+  13565 o
+  12739 e
+   9468 que
+   7192 do
+   6005 da
+   4592 para
+10 most common bigrams
+   3041 <s> o
+   2374 <s> a
+    909 que o
+    885 e o
+    871 <s> e
+    825 <s> os
+    818 e a
+    670 que a
+    620 com a
+    577 o que
